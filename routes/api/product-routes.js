@@ -11,9 +11,21 @@ router.get('/', (req, res) => {
      attributes: ['id', 'product_name', 'price', 'stock'],
      include: [
        {
-         model
+         model: Category,
+         attributes: ['id', 'product_name', 'price', 'stock'],
+         include:[
+           {
+             model: Category,
+             attributes: ['tag_name']
+           }
+         ]
        }
      ]
+   })
+   .then(data => res.json(data), res.status(200))
+   .catch(err=> {
+     console.log(err);
+     res.status(500).json(err)
    })
 });
 
