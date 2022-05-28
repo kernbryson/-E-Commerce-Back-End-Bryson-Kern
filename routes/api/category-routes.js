@@ -49,17 +49,27 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   // create a new category
   Category.create({
-    category_name: req.body.category_name
+    category_name: req.body.category_name,
   })
-  .then((newCat) => res.status(200).json(newCat))
-  .catch((err) => {
-    console.log(err);
-    res.status(400).json(err);
-  });
+    .then((newCat) => res.status(200).json(newCat))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
 
 router.put("/:id", (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((updatedCat) => res.status(200).json(updatedCat))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
 
 router.delete("/:id", (req, res) => {
